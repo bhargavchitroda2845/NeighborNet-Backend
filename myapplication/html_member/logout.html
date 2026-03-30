@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .logout-container {
+            width: 350px;
+            margin: 150px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logout-container h2 {
+            margin-bottom: 20px;
+        }
+        .logout-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-container button:hover {
+            background-color: #a71d2a;
+        }
+        .cancel-link {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="logout-container">
+    <h2>Are you sure you want to logout?</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <a href="{% url 'member:dashboard' %}" class="cancel-link">Cancel</a>
+</div>
+
+</body>
+</html>

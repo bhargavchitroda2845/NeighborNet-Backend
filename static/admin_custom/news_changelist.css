@@ -1,0 +1,40 @@
+/* News changelist table styling (admin/news/news/) */
+#changelist #result_list {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+#changelist #result_list thead th {
+    background: #f4f6f9;
+    border-bottom: 1px solid #dee2e6;
+    color: #343a40;
+    font-weight: 600;
+    padding: 10px 12px;
+}
+
+#changelist #result_list tbody td,
+#changelist #result_list tbody th {
+    border-bottom: 1px solid #e9ecef;
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+#changelist #result_list tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+#changelist #result_list tbody tr:hover {
+    background: #f1f5f9;
+}
+
+#changelist #result_list img {
+    display: block;
+}
+
+#changelist .actions {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+}

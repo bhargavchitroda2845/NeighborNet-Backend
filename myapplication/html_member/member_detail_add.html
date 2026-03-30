@@ -1,0 +1,493 @@
+{% extends "html_member/base.html" %}
+{% load static %}
+
+{% block title %}Add Member Detail{% endblock %}
+{% block nav_member_detail %}active{% endblock %}
+
+{% block page_title %}Add Member Detail{% endblock %}
+
+{% block page_subtitle %}
+Member: {{ member.first_name }} {{ member.surname }}
+{% endblock %}
+
+{% block content %}
+{% block nav_detail_menu %}menu-open{% endblock %}
+{% block nav_add_detail %}active{% endblock %}
+
+<div class="container-fluid">
+
+    <!-- MESSAGE -->
+    <div id="message"></div>
+
+    <div class="card card-outline card-success shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-id-card"></i>
+                Member Information
+            </h3>
+        </div>
+
+        <form id="memberDetailForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="card-body">
+
+                <!-- READ ONLY MEMBER INFO -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Member No</label>
+                            <input type="text" class="form-control" value="{{ member.member_no }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ member.first_name }} {{ member.middle_name }} {{ member.surname }}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- BASIC FORM FIELDS (exclude matrimonial fields) -->
+                <div class="row">
+                    {% for field in form %}
+                    {% if field.name not in "show_on_matrimonial,is_matrimonial_public,matrimonial_visibility,relation_with_member,height,blood_group,gotra,manglik,annual_income,about_matrimonial,matrimonial_photo,diet,addictions,father_name,mother_name,family_type,siblings,contact_phone,full_bio,hobbies,partner_preference,age" %}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger small">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <hr>
+
+                <!-- ===== MATRIMONIAL TOGGLE ===== -->
+                <div class="row align-items-center mb-3">
+                    <div class="col-md-12">
+                        <div class="d-flex align-items-center">
+                            <h5 class="mb-0 mr-3">
+                                <i class="fas fa-heart text-pink mr-1" style="color:#e91e8c;"></i>
+                                Show on Matrimonial
+                            </h5>
+                            <!-- Toggle switch -->
+                            <div class="custom-control custom-switch">
+                                {{ form.show_on_matrimonial }}
+                                <label class="custom-control-label" for="id_show_on_matrimonial">
+                                    <span id="matrimonial-toggle-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                        <small class="text-muted">Enable to display this person on the matrimonial listing page. Person
+                            must be 18+.</small>
+                        <!-- Age error from form -->
+                        {% if form.show_on_matrimonial.errors %}
+                        <div class="text-danger small mt-1">{{ form.show_on_matrimonial.errors|striptags }}</div>
+                        {% endif %}
+                        <!-- Inline JS age warning -->
+                        <div id="age-warning" class="alert alert-warning mt-2 d-none" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Person must be 18 or older to be listed on matrimonial.
+                        </div>
+                        <div id="marital-warning" class="alert alert-warning mt-2 d-none" role="alert">
+                            <i class="fas fa-ban"></i>
+                            Married persons cannot be listed on matrimonial.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== MATRIMONIAL EXTRA FIELDS (hidden until toggle ON) ===== -->
+                <div id="matrimonial-section" style="display:none;">
+                    <div class="card card-outline card-pink mb-3" style="border-color:#e91e8c;">
+                        <div class="card-header"
+                            style="background:linear-gradient(135deg,#e91e8c22,#f8f9fa); border-color:#e91e8c;">
+                            <h5 class="card-title mb-0" style="color:#c2185b;">
+                                <i class="fas fa-heart mr-1" style="color:#e91e8c;"></i>
+                                Matrimonial Details
+                            </h5>
+                        </div>
+                        <div class="card-body">
+
+                            <!-- Relation -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.relation_with_member.label }} <span
+                                                class="text-danger">*</span></label>
+                                        {{ form.relation_with_member }}
+                                        {% if form.relation_with_member.errors %}
+                                        <div class="text-danger small">{{ form.relation_with_member.errors|striptags }}
+                                        </div>
+                                        {% endif %}
+                                        <small class="text-muted">Relationship of this person with the primary member
+                                            account</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.height.label }}</label>
+                                        {{ form.height }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ form.blood_group.label }}</label>
+                                        {{ form.blood_group }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ form.gotra.label }}</label>
+                                        {{ form.gotra }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ form.manglik.label }}</label>
+                                        {{ form.manglik }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.annual_income.label }}</label>
+                                        {{ form.annual_income }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.matrimonial_photo.label }}</label>
+                                        {{ form.matrimonial_photo }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mt-3 mb-2 font-weight-bold" style="color:#c2185b;">Background & Lifestyle</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.diet.label }}</label>
+                                        {{ form.diet }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.addictions.label }}</label>
+                                        <div class="d-flex flex-wrap checkbox-inline-group">
+                                            {{ form.addictions }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mt-3 mb-2 font-weight-bold" style="color:#c2185b;">Family Details</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.father_name.label }}</label>
+                                        {{ form.father_name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.mother_name.label }}</label>
+                                        {{ form.mother_name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.family_type.label }}</label>
+                                        {{ form.family_type }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.siblings.label }}</label>
+                                        {{ form.siblings }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mt-3 mb-2 font-weight-bold" style="color:#c2185b;">More About Me & Partner
+                                Preferences</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.contact_phone.label }}</label>
+                                        {{ form.contact_phone }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ form.hobbies.label }}</label>
+                                        {{ form.hobbies }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ form.about_matrimonial.label }}</label>
+                                        {{ form.about_matrimonial }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ form.full_bio.label }}</label>
+                                        {{ form.full_bio }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ form.partner_preference.label }}</label>
+                                        {{ form.partner_preference }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visibility Toggles -->
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <div class="card bg-light p-3">
+                                        <label class="font-weight-bold mb-2">
+                                            <i class="fas fa-eye mr-1"></i> Profile Visibility
+                                        </label>
+
+                                        <!-- Hidden real form fields (controlled by toggles below) -->
+                                        <div style="display:none;">
+                                            {{ form.is_matrimonial_public }}
+                                            {{ form.matrimonial_visibility }}
+                                        </div>
+
+                                        <!-- Public Toggle -->
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="custom-control custom-switch mr-3">
+                                                <input type="checkbox" class="custom-control-input" id="toggle_public">
+                                                <label class="custom-control-label font-weight-bold" for="toggle_public">
+                                                    <i class="fas fa-globe mr-1 text-success"></i> Public
+                                                </label>
+                                            </div>
+                                            <span id="public-badge" class="badge badge-secondary">Off</span>
+                                            <small class="text-muted ml-2">— Show to everyone</small>
+                                        </div>
+
+                                        <!-- Protected Toggle (only shown when Public is ON) -->
+                                        <div class="d-flex align-items-center ml-3" id="protected-toggle-row" style="display:none !important;">
+                                            <div class="custom-control custom-switch mr-3">
+                                                <input type="checkbox" class="custom-control-input" id="toggle_protected">
+                                                <label class="custom-control-label font-weight-bold" for="toggle_protected">
+                                                    <i class="fas fa-lock mr-1 text-warning"></i> Members Only (Protected)
+                                                </label>
+                                            </div>
+                                            <span id="protected-badge" class="badge badge-secondary">Off</span>
+                                            <small class="text-muted ml-2">— Logged-in members only</small>
+                                        </div>
+
+                                        <small class="text-muted mt-2 d-block">
+                                            <strong>Public OFF</strong> = Private (only you).<br>
+                                            <strong>Public ON</strong> = visible to all.<br>
+                                            <strong>Public ON + Members Only ON</strong> = logged-in members only.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.card-body -->
+
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <a href="{% url 'member:dashboard' %}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(function () {
+
+        // ── Matrimonial toggle ──────────────────────────────────────────
+        function updateMatrimonialUI() {
+            var checked = $('#id_show_on_matrimonial').is(':checked');
+            $('#matrimonial-toggle-label').text(checked ? 'Yes' : 'No');
+            if (checked) {
+                $('#matrimonial-section').slideDown(300);
+                checkAge();
+            } else {
+                $('#matrimonial-section').slideUp(300);
+                $('#age-warning').addClass('d-none');
+            }
+        }
+
+        $('#id_show_on_matrimonial').on('change', updateMatrimonialUI);
+
+        // Run on page load in case of form re-render after validation error
+        updateMatrimonialUI();
+
+        // ── Visibility Toggles ─────────────────────────────────────────
+        function syncVisibilityToggles() {
+            var isPublic = $('#toggle_public').is(':checked');
+            var isProtected = $('#toggle_protected').is(':checked');
+
+            // Sync the hidden real form fields
+            $('#id_is_matrimonial_public').prop('checked', isPublic);
+            $('#id_matrimonial_visibility').val(isPublic && isProtected ? 'Protected' : 'Public');
+
+            // Update Public badge
+            var pubBadge = $('#public-badge');
+            if (isPublic) {
+                pubBadge.removeClass('badge-secondary').addClass('badge-success').text('On');
+                $('#protected-toggle-row').show();
+            } else {
+                pubBadge.removeClass('badge-success').addClass('badge-secondary').text('Off');
+                $('#protected-toggle-row').hide();
+                $('#toggle_protected').prop('checked', false);
+                $('#protected-badge').removeClass('badge-warning badge-success').addClass('badge-secondary').text('Off');
+            }
+
+            // Update Protected badge
+            var protBadge = $('#protected-badge');
+            if (isPublic && isProtected) {
+                protBadge.removeClass('badge-secondary').addClass('badge-warning').text('On');
+            } else {
+                protBadge.removeClass('badge-warning').addClass('badge-secondary').text('Off');
+            }
+        }
+
+        // Initialise toggles from current form state (for re-render after error)
+        function initVisibilityToggles() {
+            var pub = $('#id_is_matrimonial_public').is(':checked');
+            var vis = $('#id_matrimonial_visibility').val();
+            $('#toggle_public').prop('checked', pub);
+            $('#toggle_protected').prop('checked', vis === 'Protected');
+            syncVisibilityToggles();
+        }
+
+        $('#toggle_public').on('change', syncVisibilityToggles);
+        $('#toggle_protected').on('change', syncVisibilityToggles);
+        initVisibilityToggles();
+
+        function checkAge() {
+            var dob = $('#id_date_of_birth').val();
+            if (!dob) return;
+            var dobDate = new Date(dob);
+            var today = new Date();
+            var age = today.getFullYear() - dobDate.getFullYear();
+            var m = today.getMonth() - dobDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) age--;
+            if (age < 18) {
+                $('#age-warning').removeClass('d-none');
+            } else {
+                $('#age-warning').addClass('d-none');
+            }
+        }
+
+        function checkMaritalStatus() {
+            var status = $('#id_marital_status').val();
+            if (status && status.toLowerCase() === 'married') {
+                $('#id_show_on_matrimonial').prop('checked', false).prop('disabled', true);
+                $('#marital-warning').removeClass('d-none');
+                updateMatrimonialUI();
+            } else {
+                $('#id_show_on_matrimonial').prop('disabled', false);
+                $('#marital-warning').addClass('d-none');
+            }
+        }
+
+        $('#id_date_of_birth').on('change', function () {
+            if ($('#id_show_on_matrimonial').is(':checked')) checkAge();
+        });
+        $('#id_marital_status').on('change', checkMaritalStatus);
+
+        checkMaritalStatus(); // This calls updateMatrimonialUI internally if married, otherwise we call it separately
+        if (!$('#id_marital_status').val() || $('#id_marital_status').val().toLowerCase() !== 'married') {
+            updateMatrimonialUI();
+        }
+
+        // ── Form submit ─────────────────────────────────────────────────
+        $('#memberDetailForm').on('submit', function (e) {
+            e.preventDefault();
+
+            // Block if age warning is visible
+            if ($('#id_show_on_matrimonial').is(':checked') && !$('#age-warning').hasClass('d-none')) {
+                $('#message').html(
+                    '<div class="alert alert-danger"><i class="fas fa-times-circle"></i> Person must be 18+ to be listed on matrimonial.</div>'
+                );
+                return;
+            }
+
+            $.ajax({
+                url: "{% url 'member:member_detail_add' %}",
+                type: "POST",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#message').html(
+                            '<div class="alert alert-success alert-dismissible fade show">' +
+                            '<i class="fas fa-check-circle"></i> ' + response.message +
+                            '</div>'
+                        );
+                        $('#memberDetailForm')[0].reset();
+                        updateMatrimonialUI();
+                        updatePublicBadge();
+                    }
+                    if (response.status === 'error') {
+                        var errorHtml = '<div class="alert alert-danger"><ul>';
+                        $.each(response.errors, function (field, errors) {
+                            $.each(errors, function (i, error) {
+                                errorHtml += '<li>' + field + ': ' + error + '</li>';
+                            });
+                        });
+                        errorHtml += '</ul></div>';
+                        $('#message').html(errorHtml);
+                        // Re-show matrimonial section if errors in those fields
+                        if (response.errors['date_of_birth'] || response.errors['relation_with_member']) {
+                            $('#id_show_on_matrimonial').prop('checked', true);
+                            updateMatrimonialUI();
+                        }
+                    }
+                },
+
+                error: function () {
+                    $('#message').html(
+                        '<div class="alert alert-danger">Something went wrong. Please try again.</div>'
+                    );
+                }
+            });
+        });
+
+    });
+</script>
+{% endblock %}

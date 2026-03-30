@@ -1,0 +1,30 @@
+# Django
+db.sqlite3
+db.sqlite3-journal
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+
+# Environment Variables
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak
+.env.bak
+
+# Static and Media
+staticfiles/
+media/
+
+# IDEs
+.vscode/
+.idea/
+
+# Local Secrets
+secrets.json
+*.env

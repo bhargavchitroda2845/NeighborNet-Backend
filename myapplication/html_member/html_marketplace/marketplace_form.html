@@ -1,0 +1,126 @@
+{% extends "html_member/base.html" %}
+
+{% block nav_marketplace_menu %}menu-open{% endblock %}
+{% if item %}
+{% block nav_marketplace_list %}active{% endblock %}
+{% else %}
+{% block nav_marketplace_add %}active{% endblock %}
+{% endif %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-outline card-success shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-store"></i>
+                {% if item %}Edit Listing{% else %}Add Listing{% endif %}
+            </h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<small class="text-danger">{{ form.title.errors|striptags }}</small>{% endif %}
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <label>Description</label>
+                        {{ form.desc }}
+                        {% if form.desc.errors %}<small class="text-danger">{{ form.desc.errors|striptags }}</small>{% endif %}
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <label>Image</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}<small class="text-danger">{{ form.image.errors|striptags }}</small>{% endif %}
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <label>Listing Type</label>
+                        {{ form.listing_type }}
+                        {% if form.listing_type.errors %}<small class="text-danger">{{ form.listing_type.errors|striptags }}</small>{% endif %}
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <label>Area</label>
+                        {{ form.area }}
+                        {% if form.area.errors %}<small class="text-danger">{{ form.area.errors|striptags }}</small>{% endif %}
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <label>Contact</label>
+                        {{ form.contact }}
+                        {% if form.contact.errors %}<small class="text-danger">{{ form.contact.errors|striptags }}</small>{% endif %}
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <label>Min Price</label>
+                        {{ form.min_price }}
+                        {% if form.min_price.errors %}<small class="text-danger">{{ form.min_price.errors|striptags }}</small>{% endif %}
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <label>Max Price</label>
+                        {{ form.max_price }}
+                        {% if form.max_price.errors %}<small class="text-danger">{{ form.max_price.errors|striptags }}</small>{% endif %}
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <label>Price</label>
+                        {{ form.price }}
+                        {% if form.price.errors %}<small class="text-danger">{{ form.price.errors|striptags }}</small>{% endif %}
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <div class="form-check">
+                            {{ form.bidding_enabled }}
+                            <label class="form-check-label" for="id_bidding_enabled">
+                                <strong>Enable Bidding</strong>
+                                <small class="d-block text-muted">Allow members to place bids on this item</small>
+                            </label>
+                        </div>
+                        {% if form.bidding_enabled.errors %}<small class="text-danger">{{ form.bidding_enabled.errors|striptags }}</small>{% endif %}
+                    </div>
+                    
+                    {% if item and item.status == "published" %}
+                    <div class="col-md-12 mt-3">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Mark as Sold:</strong> When you're ready to sell your item, click the "Mark as Sold" button below. This will immediately mark your item as sold without requiring admin review.
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-footer text-right">
+                <button class="btn btn-secondary" type="submit" name="action" value="save_draft">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button class="btn btn-success ml-2" type="submit" name="action" value="submit_review">
+                    <i class="fas fa-paper-plane"></i> Submit for Review
+                </button>
+                {% if item and item.status == "published" %}
+                <button class="btn btn-warning ml-2" type="submit" name="action" value="mark_as_sold">
+                    <i class="fas fa-check-circle"></i> Mark as Sold
+                </button>
+                {% endif %}
+                {% if item %}
+                <a href="{% url 'marketplace:member_marketplace_delete' item.id %}" class="btn btn-danger ml-2">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+                {% endif %}
+                <a href="{% url 'marketplace:member_marketplace_list' %}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(function () {
+    $('input, textarea, select').addClass('form-control');
+});
+</script>
+{% endblock %}

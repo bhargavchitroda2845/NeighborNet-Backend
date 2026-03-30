@@ -1,0 +1,183 @@
+{% extends "html_member/base.html" %}
+{% load static %}
+
+{% block title %}My Profile{% endblock %}
+{% block nav_profile_menu %}menu-open{% endblock %}
+{% block nav_edit_profile %}active{% endblock %}
+
+{% block page_title %}My Profile{% endblock %}
+{% block page_subtitle %}Your account information and recent activity{% endblock %}
+
+{% block extra_css %}
+<style>
+.profile-hero {
+    background: linear-gradient(135deg, #0f4c81 0%, #2f7ab8 100%);
+    color: #fff;
+    border-radius: 0.5rem;
+}
+.profile-hero .label-muted {
+    color: rgba(255, 255, 255, 0.8);
+}
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+.stats-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.mini-meta {
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card profile-hero shadow-sm mb-3">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center text-md-left mb-3 mb-md-0">
+                    <img class="img-circle profile-avatar"
+                         src="{% if member.profile_image %}{{ member.profile_image.url }}{% elif latest_detail and latest_detail.profile_image %}{{ latest_detail.profile_image.url }}{% else %}{% static 'assets_djngo_admin/admin-lte/dist/img/user2-160x160.jpg' %}{% endif %}"
+                         alt="User profile picture">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="mb-1">{{ member.first_name }} {{ member.middle_name|default:"" }} {{ member.surname }}</h3>
+                    <div class="label-muted">Member #{{ member.member_no }}</div>
+                    <div class="mini-meta mt-2">
+                        <i class="fas fa-user mr-1"></i> {{ member.username }}
+                        <span class="mx-2">|</span>
+                        <i class="fas fa-phone mr-1"></i> {{ member.phone_no }}
+                    </div>
+                </div>
+                <div class="col-md-3 text-md-right">
+                    {% if member.status == "Active" %}
+                    <span class="badge badge-success p-2">Active Account</span>
+                    {% else %}
+                    <span class="badge badge-danger p-2">Inactive Account</span>
+                    {% endif %}
+                    <div class="mt-2">
+                        <a href="{% url 'member:member_edit' %}" class="btn btn-sm btn-light">
+                            <i class="fas fa-user-edit"></i> Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card card-outline card-info stats-card">
+                <div class="card-body">
+                    <div class="text-muted">Member Details</div>
+                    <div class="value">{{ detail_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-outline card-primary stats-card">
+                <div class="card-body">
+                    <div class="text-muted">News Posts</div>
+                    <div class="value">{{ news_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-outline card-success stats-card">
+                <div class="card-body">
+                    <div class="text-muted">Marketplace Listings</div>
+                    <div class="value">{{ listing_count }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-outline card-primary">
+                <div class="card-header"><h3 class="card-title">Basic Information</h3></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 mb-2"><strong>First Name:</strong> {{ member.first_name }}</div>
+                        <div class="col-6 mb-2"><strong>Middle Name:</strong> {{ member.middle_name|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Surname:</strong> {{ member.surname }}</div>
+                        <div class="col-6 mb-2"><strong>Email:</strong> {{ member.email_id|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Date of Birth:</strong> {{ member.date_of_birth|date:'Y-m-d' }}</div>
+                        <div class="col-6 mb-2"><strong>Age:</strong> {{ member.age }}</div>
+                        <div class="col-6 mb-2"><strong>Gender:</strong> {{ member.get_gender_display }}</div>
+                        <div class="col-6 mb-2"><strong>Occupation:</strong> {{ member.occupation|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Marital Status:</strong> {{ member.get_marital_status_display|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Education:</strong> {{ member.education|default:'-' }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-outline card-secondary">
+                <div class="card-header"><h3 class="card-title">Latest Member Detail</h3></div>
+                <div class="card-body">
+                    {% if latest_detail %}
+                    <div class="mb-2 text-right">
+                        <a href="{% url 'member:member_detail_edit' latest_detail.member_id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i> Edit This Detail
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-2"><strong>Detail ID:</strong> {{ latest_detail.member_id }}</div>
+                        <div class="col-6 mb-2"><strong>Name:</strong> {{ latest_detail.first_name }} {{ latest_detail.middle_name|default:'' }} {{ latest_detail.surname }}</div>
+                        <div class="col-6 mb-2"><strong>Email:</strong> {{ latest_detail.email_id|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>DOB:</strong> {{ latest_detail.date_of_birth|date:'Y-m-d' }}</div>
+                        <div class="col-6 mb-2"><strong>Age:</strong> {{ latest_detail.age }}</div>
+                        <div class="col-6 mb-2"><strong>Gender:</strong> {{ latest_detail.get_gender_display }}</div>
+                        <div class="col-6 mb-2"><strong>Occupation:</strong> {{ latest_detail.occupation|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Marital Status:</strong> {{ latest_detail.get_marital_status_display|default:'-' }}</div>
+                        <div class="col-6 mb-2"><strong>Education:</strong> {{ latest_detail.education|default:'-' }}</div>
+                    </div>
+                    {% else %}
+                    <span class="text-muted">No member detail record found.</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-outline card-info">
+                <div class="card-header"><h3 class="card-title">Latest News</h3></div>
+                <div class="card-body">
+                    {% if latest_news %}
+                    <div><strong>Title:</strong> {{ latest_news.title }}</div>
+                    <div class="mt-2"><strong>Status:</strong> {{ latest_news.get_status_display }}</div>
+                    <div class="mt-2"><strong>Created:</strong> {{ latest_news.created_at|date:"M d, Y h:i A" }}</div>
+                    {% if latest_news.category %}
+                    <div class="mt-2"><strong>Category:</strong> {{ latest_news.category.name }}</div>
+                    {% endif %}
+                    {% else %}
+                    <span class="text-muted">No news post available.</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card card-outline card-success">
+                <div class="card-header"><h3 class="card-title">Latest Marketplace Listing</h3></div>
+                <div class="card-body">
+                    {% if latest_listing %}
+                    <div><strong>Title:</strong> {{ latest_listing.title }}</div>
+                    <div class="mt-2"><strong>Status:</strong> {{ latest_listing.get_status_display }}</div>
+                    <div class="mt-2"><strong>Type:</strong> {{ latest_listing.get_listing_type_display }}</div>
+                    <div class="mt-2"><strong>Created:</strong> {{ latest_listing.created_at|date:"M d, Y h:i A" }}</div>
+                    {% if latest_listing.price %}
+                    <div class="mt-2"><strong>Price:</strong> {{ latest_listing.price }}</div>
+                    {% endif %}
+                    {% else %}
+                    <span class="text-muted">No listing available.</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

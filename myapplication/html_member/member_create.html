@@ -1,0 +1,177 @@
+{% extends "html_member/base.html" %}
+
+{% block title %}Create Member{% endblock %}
+{% block nav_member_menu %}menu-open{% endblock %}
+{% block nav_create_member %}active{% endblock %}
+{% block page_title %}Create Member{% endblock %}
+{% block page_subtitle %}Create member using Member table{% endblock %}
+
+{% block content %}
+<div id="message"></div>
+
+<div class="card card-outline card-success shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-user-plus mr-1"></i>Member Form</h3>
+    </div>
+
+    <form id="createMemberForm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label>First Name *</label>
+                    <input type="text" name="first_name" class="form-control" required>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Middle Name (Optional)</label>
+                    <input type="text" name="middle_name" class="form-control">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Surname *</label>
+                    <input type="text" name="surname" class="form-control" required>
+                </div>                <div class="col-md-4 form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email_id" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label>Gender *</label>
+                    <select name="gender" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label>Date of Birth (Optional)</label>
+                    <input type="date" name="date_of_birth" class="form-control">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Occupation (Optional)</label>
+                    <input type="text" name="occupation" class="form-control">
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label>Country *</label>
+                    <select name="country" id="countrySelect" class="form-control" required>
+                        <option value="">Select Country</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>State *</label>
+                    <select name="state" id="stateSelect" class="form-control" required>
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>City (Optional)</label>
+                    <select name="city" id="citySelect" class="form-control">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label>Residential Address *</label>
+                    <textarea name="residential_address" class="form-control" rows="3" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-right">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Create Member</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    const $country = $('#countrySelect');
+    const $state = $('#stateSelect');
+    const $city = $('#citySelect');
+
+    function renderOptions($el, items, defaultLabel) {
+        let html = `<option value="">${defaultLabel}</option>`;
+        items.forEach(function (item) {
+            html += `<option value="${item.id}">${item.name}</option>`;
+        });
+        $el.html(html);
+    }
+
+    function loadCountries() {
+        $.getJSON('{% url "member:country_list_api" %}', function (response) {
+            renderOptions($country, response.results || [], 'Select Country');
+        });
+    }
+
+    function loadStates(countryId) {
+        renderOptions($state, [], 'Select State');
+        renderOptions($city, [], 'Select City');
+        if (!countryId) return;
+
+        $.getJSON('{% url "member:state_list_api" %}?country_id=' + countryId, function (response) {
+            renderOptions($state, response.results || [], 'Select State');
+        });
+    }
+
+    function loadCities(countryId, stateId) {
+        renderOptions($city, [], 'Select City');
+        if (!countryId) return;
+
+        let url = '{% url "member:city_list_api" %}?country_id=' + countryId;
+        if (stateId) {
+            url += '&state_id=' + stateId;
+        }
+        $.getJSON(url, function (response) {
+            renderOptions($city, response.results || [], 'Select City');
+        });
+    }
+
+    $country.on('change', function () {
+        loadStates(this.value);
+    });
+
+    $state.on('change', function () {
+        loadCities($country.val(), this.value);
+    });
+
+    $('#createMemberForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '{% url "member:member_create_api" %}',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                $('#message').html(
+                    '<div class="alert alert-success">' +
+                    response.message + '<br>' +
+                    'Password is not shared by email. The member will receive a secure link after approval.' +
+                    '</div>'
+                );
+                $('#createMemberForm')[0].reset();
+                renderOptions($state, [], 'Select State');
+                renderOptions($city, [], 'Select City');
+            },
+            error: function (xhr) {
+                const errors = xhr.responseJSON && xhr.responseJSON.errors ? xhr.responseJSON.errors : {};
+                let html = '<div class="alert alert-danger"><ul>';
+                Object.keys(errors).forEach(function (field) {
+                    errors[field].forEach(function (msg) {
+                        html += '<li>' + field + ': ' + msg + '</li>';
+                    });
+                });
+                html += '</ul></div>';
+                $('#message').html(html);
+            }
+        });
+    });
+
+    loadCountries();
+})();
+</script>
+{% endblock %}
+
+

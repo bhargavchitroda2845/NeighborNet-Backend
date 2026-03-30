@@ -1,0 +1,110 @@
+{% extends "html_member/base.html" %}
+
+{% block title %}Edit Member{% endblock %}
+{% block nav_member_menu %}menu-open{% endblock %}
+{% block nav_edit_member %}active{% endblock %}
+{% block page_title %}Edit Member{% endblock %}
+{% block page_subtitle %}Update your main member information{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-outline card-primary shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-user-edit mr-1"></i>Edit Member</h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="row">
+                    {% for field in form %}
+                    <div class="col-md-6 mb-2">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <small class="text-danger">{{ field.errors|striptags }}</small>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{% url 'member:profile' %}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    const countryEl = document.getElementById("id_country");
+    const stateEl = document.getElementById("id_state");
+    const cityEl = document.getElementById("id_city");
+
+    if (!countryEl || !stateEl || !cityEl) {
+        return;
+    }
+
+    function setOptions(selectEl, items, selectedValue, placeholder) {
+        const current = selectedValue || "";
+        selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+        items.forEach(item => {
+            const opt = document.createElement("option");
+            opt.value = item.id;
+            opt.textContent = item.name;
+            if (String(item.id) === String(current)) {
+                opt.selected = true;
+            }
+            selectEl.appendChild(opt);
+        });
+    }
+
+    async function loadStates(countryId, selectedStateId) {
+        setOptions(stateEl, [], "", "---------");
+        setOptions(cityEl, [], "", "---------");
+        if (!countryId) {
+            return;
+        }
+        const url = "{% url 'member:state_list_api' %}?country_id=" + encodeURIComponent(countryId);
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = Array.isArray(data.results) ? data.results : [];
+        setOptions(stateEl, items, selectedStateId, "---------");
+    }
+
+    async function loadCities(countryId, stateId, selectedCityId) {
+        setOptions(cityEl, [], "", "---------");
+        if (!countryId) {
+            return;
+        }
+        let url = "{% url 'member:city_list_api' %}?country_id=" + encodeURIComponent(countryId);
+        if (stateId) {
+            url += "&state_id=" + encodeURIComponent(stateId);
+        }
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = Array.isArray(data.results) ? data.results : [];
+        setOptions(cityEl, items, selectedCityId, "---------");
+    }
+
+    countryEl.addEventListener("change", async function () {
+        await loadStates(countryEl.value, "");
+        await loadCities(countryEl.value, "", "");
+    });
+
+    stateEl.addEventListener("change", async function () {
+        await loadCities(countryEl.value, stateEl.value, "");
+    });
+
+    // Keep existing selected values but avoid loading unnecessary full datasets.
+    loadStates(countryEl.value, stateEl.value).then(function () {
+        return loadCities(countryEl.value, stateEl.value, cityEl.value);
+    });
+})();
+</script>
+{% endblock %}

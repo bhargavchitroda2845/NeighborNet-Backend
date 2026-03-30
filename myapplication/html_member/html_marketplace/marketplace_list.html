@@ -1,0 +1,141 @@
+{% extends "html_member/base.html" %}
+
+{% block nav_marketplace_menu %}menu-open{% endblock %}
+{% block nav_marketplace_list %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Marketplace</h1>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="{% url 'marketplace:member_marketplace_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Listing
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <div class="card card-outline card-primary mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-search"></i>
+                Search My Listings
+            </h3>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'marketplace:member_marketplace_list' %}" class="form-inline">
+                <div class="input-group w-100">
+                    <input type="text" 
+                           name="q" 
+                           class="form-control" 
+                           placeholder="Search by title, area, contact..." 
+                           value="{{ request.GET.q|default:'' }}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        {% if request.GET.q %}
+                        <a href="{% url 'marketplace:member_marketplace_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Clear
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-outline card-primary mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-store"></i>
+                My Listings
+            </h3>
+        </div>
+
+        <div class="card-body table-responsive p-0">
+            <table class="table table-bordered table-striped table-hover text-nowrap m-0 js-data-table"
+                   data-page-length="10"
+                   data-order-col="8"
+                   data-order-dir="desc">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Area</th>
+                        <th>Contact</th>
+                        <th>Min Price</th>
+                        <th>Max Price</th>
+                        <th>Price</th>
+                        <th>Bids</th>
+                        <th>Created At</th>
+                        <th width="150">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.title }}</td>
+                            <td><span class="badge badge-info">{{ item.get_listing_type_display }}</span></td>
+                            <td>
+                                {% if item.status == "published" %}
+                                    <span class="badge badge-success">Published</span>
+                                {% elif item.status == "inreview" %}
+                                    <span class="badge badge-primary">In Review</span>
+                                {% elif item.status == "rejected" %}
+                                    <span class="badge badge-danger">Rejected</span>
+                                {% elif item.status == "sold" %}
+                                    <span class="badge badge-secondary">Sold</span>
+                                {% else %}
+                                    <span class="badge badge-warning">Draft</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.area|default:"-" }}</td>
+                            <td>{{ item.contact }}</td>
+                            <td>{{ item.min_price|default:"-" }}</td>
+                            <td>{{ item.max_price|default:"-" }}</td>
+                            <td>{{ item.price|default:"-" }}</td>
+                            <td>
+                                {% if item.bidding_enabled %}
+                                    {% if item.bid_count > 0 %}
+                                        <span class="badge badge-warning">
+                                            {{ item.bid_count }} {% if item.pending_bid_count > 0 %}({{ item.pending_bid_count }} pending){% endif %}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">0</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="badge badge-light">-</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if item.bidding_enabled and item.bid_count > 0 %}
+                                    <a href="{% url 'marketplace:member_marketplace_bids' item.id %}" class="btn btn-sm btn-warning" title="View Bids">
+                                        💰
+                                    </a>
+                                {% endif %}
+                                <a href="{% url 'marketplace:member_marketplace_edit' item.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'marketplace:member_marketplace_delete' item.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="11" class="text-center text-muted">
+                                No marketplace listings found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

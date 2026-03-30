@@ -1,0 +1,196 @@
+{% extends "html_member/base.html" %}
+
+{% block nav_business_menu %}menu-open{% endblock %}
+{% if business %}
+{% block nav_business_list %}active{% endblock %}
+{% else %}
+{% block nav_business_add %}active{% endblock %}
+{% endif %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-outline card-success shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-store"></i>
+                {% if business %}Edit Business{% else %}Add Business{% endif %}
+            </h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="row">
+                    <!-- Business Name -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Business Name <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" required
+                                   value="{{ business.name|default:'' }}"
+                                   placeholder="e.g., Shree Civil Works">
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Category <span class="text-danger">*</span></label>
+                            <select name="category" class="form-control">
+                                <option value="">-- Select Category --</option>
+                                {% for cat in categories %}
+                                    <option value="{{ cat.id }}" {% if business.category_id == cat.id %}selected{% endif %}>
+                                        {% if cat.icon %}{{ cat.icon }} {% endif %}{{ cat.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Service Type -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Service Type <span class="text-danger">*</span></label>
+                            <input type="text" name="service" class="form-control" required
+                                   value="{{ business.service|default:'' }}"
+                                   placeholder="e.g., Civil Work, Plumber, Electrician, Tailor">
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Location (City) <span class="text-danger">*</span></label>
+                            <input type="text" name="location" class="form-control" required
+                                   value="{{ business.location|default:'' }}"
+                                   placeholder="e.g., Ahmedabad, Surat, Vadodara">
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Contact Number <span class="text-danger">*</span></label>
+                            <input type="text" name="phone" class="form-control" required
+                                   value="{{ business.phone|default:'' }}"
+                                   placeholder="e.g., 9876543210">
+                        </div>
+                    </div>
+
+                    <!-- Working Hours -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Working Hours</label>
+                            <input type="text" name="working_hours" class="form-control"
+                                   value="{{ business.working_hours|default:'' }}"
+                                   placeholder="e.g., 9 AM - 6 PM">
+                        </div>
+                    </div>
+
+                    <!-- Area -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Local Area / Neighborhood</label>
+                            <input type="text" name="area" class="form-control"
+                                   value="{{ business.area|default:'' }}"
+                                   placeholder="e.g., Prahlad Nagar, Varachha">
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Min Price (₹)</label>
+                            <input type="number" name="price_range_min" class="form-control"
+                                   value="{{ business.price_range_min|default:'' }}"
+                                   placeholder="Minimum">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Max Price (₹)</label>
+                            <input type="number" name="price_range_max" class="form-control"
+                                   value="{{ business.price_range_max|default:'' }}"
+                                   placeholder="Maximum">
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Business Image</label>
+                            {% if business.image %}
+                                <div class="mb-2">
+                                    <img src="{{ business.image.url }}" alt="Current Image"
+                                         style="max-width: 200px; max-height: 200px; object-fit: cover;"
+                                         class="img-thumbnail">
+                                    <p class="text-muted mb-0">Current image</p>
+                                </div>
+                            {% endif %}
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                            {% if business.image %}
+                                <small class="text-muted">Leave empty to keep current image</small>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Full Address</label>
+                            <textarea name="address" class="form-control" rows="2"
+                                      placeholder="Complete business address">{{ business.address|default:'' }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Service Details <span class="text-danger">*</span></label>
+                            <textarea name="details" class="form-control" rows="4" required
+                                      placeholder="Describe your services in detail...">{{ business.details|default:'' }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Status Info (for edit) -->
+                    {% if business %}
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Current Status:</strong>
+                            {% if business.status == 'draft' %}
+                                <span class="badge badge-warning">Draft</span>
+                            {% elif business.status == 'inreview' %}
+                                <span class="badge badge-primary">In Review</span>
+                            {% elif business.status == 'published' %}
+                                <span class="badge badge-success">Published</span>
+                            {% elif business.status == 'rejected' %}
+                                <span class="badge badge-danger">Rejected</span>
+                            {% endif %}
+                            <br>
+                            <small>Edits will require re-review if the business was previously published or rejected.</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-footer text-right">
+                <button class="btn btn-secondary" type="submit" name="action" value="save_draft">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button class="btn btn-success ml-2" type="submit" name="action" value="submit_review">
+                    <i class="fas fa-paper-plane"></i> Submit for Review
+                </button>
+                {% if business %}
+                <a href="{% url 'business:business_delete' business.id %}" class="btn btn-danger ml-2"
+                   onclick="return confirm('Are you sure you want to delete this business?');">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+                {% endif %}
+                <a href="{% url 'business:business_list' %}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

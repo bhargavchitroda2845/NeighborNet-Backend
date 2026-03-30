@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper p-4">
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+    <a href="{% url 'member:dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+</div>
+</body>
+</html>

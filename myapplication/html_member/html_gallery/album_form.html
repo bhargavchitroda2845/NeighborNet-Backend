@@ -1,0 +1,116 @@
+{% extends "html_member/base.html" %}
+{% load static %}
+
+{% block nav_gallery_menu %}menu-open{% endblock %}
+{% block nav_gallery_add %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if album %}Edit Album{% else %}Create New Album{% endif %}
+                    </h3>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="title">Album Title *</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   value="{{ album.title|default:'' }}" required
+                                   placeholder="Enter album title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description"
+                                      placeholder="Enter album description (optional)" rows="4">{{ album.description|default:'' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visibility">Visibility</label>
+                            <select class="form-control" id="visibility" name="visibility">
+                                {% for value, label in visibility_choices %}
+                                    <option value="{{ value }}" {% if album.visibility == value or not album and value == 'public' %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="text-muted">
+                                <ul>
+                                    <li><strong>Public:</strong> Visible to everyone</li>
+                                    <li><strong>Protected:</strong> Visible only to logged-in members</li>
+                                    <li><strong>Private:</strong> Visible only to you</li>
+                                </ul>
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cover_image">Cover Image</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="cover_image" 
+                                           name="cover_image" accept="image/*">
+                                    <label class="custom-file-label" for="cover_image">
+                                        {% if album.cover_image %}Change cover image{% else %}Choose cover image{% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            {% if album.google_drive_file_id or album.cover_image %}
+                                <div class="mt-2">
+                                    <img src="{{ album.display_url }}" alt="Cover" 
+
+                                         class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if album %}
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div>
+                                {% if album.status == "draft" %}
+                                    <span class="badge badge-warning">Draft</span>
+                                {% elif album.status == "inreview" %}
+                                    <span class="badge badge-primary">In Review</span>
+                                {% elif album.status == "published" %}
+                                    <span class="badge badge-success">Published</span>
+                                {% elif album.status == "rejected" %}
+                                    <span class="badge badge-danger">Rejected</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" name="action" value="save_draft" class="btn btn-secondary">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                        <button type="submit" name="action" value="submit_review" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit for Review
+                        </button>
+                        <a href="{% url 'gallery:my_albums' %}" class="btn btn-default float-right">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets_members/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<script>
+$(function () {
+    bsCustomFileInput.init();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,355 @@
+{% extends "html_member/base.html" %}
+
+{% block nav_marketplace_menu %}menu-open{% endblock %}
+{% block nav_marketplace_list %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bid-card {
+        border-left: 4px solid #ffc107;
+        margin-bottom: 15px;
+        transition: transform 0.2s;
+    }
+    .bid-card.accepted {
+        border-left-color: #28a745;
+    }
+    .bid-card.rejected {
+        border-left-color: #dc3545;
+    }
+    .bid-card.winner {
+        border-left-color: #ffc107;
+        border: 2px solid #ffc107;
+        background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+    }
+    .bid-card:hover {
+        transform: translateX(5px);
+    }
+    .bid-amount {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #28a745;
+    }
+    .bidder-info {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    .status-badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+    .pending-badge {
+        background-color: #ffc107;
+        color: #000;
+    }
+    .accepted-badge {
+        background-color: #28a745;
+        color: #fff;
+    }
+    .winner-badge {
+        background-color: #ffc107;
+        color: #000;
+        font-weight: bold;
+    }
+    .rejected-badge {
+        background-color: #dc3545;
+        color: #fff;
+    }
+    .action-buttons .btn {
+        margin-right: 5px;
+    }
+    .section-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    .empty-section {
+        text-align: center;
+        padding: 30px;
+        color: #6c757d;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+    .trophy-icon {
+        color: #ffc107;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">
+                <i class="fas fa-money-bill-wave"></i>
+                Bids for: {{ item.title }}
+            </h1>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="{% url 'marketplace:member_marketplace_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Listings
+            </a>
+        </div>
+    </div>
+
+    <!-- Item Info Card -->
+    <div class="card card-outline card-primary mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-info-circle"></i>
+                Item Details
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>Type:</strong> {{ item.get_listing_type_display }}
+                </div>
+                <div class="col-md-3">
+                    <strong>Status:</strong> 
+                    {% if item.status == "published" %}
+                        <span class="badge badge-success">Published</span>
+                    {% else %}
+                        <span class="badge badge-secondary">{{ item.get_status_display }}</span>
+                    {% endif %}
+                </div>
+                <div class="col-md-3">
+                    <strong>Min Price:</strong> {{ item.min_price|default:"-" }}
+                </div>
+                <div class="col-md-3">
+                    <strong>Max Price:</strong> {{ item.max_price|default:"-" }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Bids -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-clock"></i>
+                    Pending Bids ({{ pending_count }})
+                </h4>
+            </div>
+            
+            {% if pending_bids %}
+                {% for bid in pending_bids %}
+                    <div class="card bid-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="bid-amount">₹{{ bid.bid_amount }}</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="bidder-info">
+                                        <strong>{{ bid.bidder.first_name|default:bid.bidder.username }} {{ bid.bidder.surname|default:"" }}</strong>
+                                        <br>
+                                        <small>@{{ bid.bidder.username }}</small>
+                                        <br>
+                                        <small class="text-muted">{{ bid.created_at|date:"Y-m-d H:i" }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if bid.message %}
+                                        <p class="mb-0"><em>"{{ bid.message }}"</em></p>
+                                    {% else %}
+                                        <p class="mb-0 text-muted">No message</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-2 text-right action-buttons">
+                                    <button class="btn btn-success btn-sm" onclick="manageBid('{{ bid.id }}', 'accept')">
+                                        <i class="fas fa-check"></i> Accept
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="manageBid('{{ bid.id }}', 'reject')">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-section">
+                    <i class="fas fa-inbox fa-2x mb-2"></i>
+                    <p>No pending bids</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Accepted Bids -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="section-header" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                <h4 class="mb-0">
+                    <i class="fas fa-check-circle"></i>
+                    Accepted Bids ({{ accepted_count }})
+                </h4>
+            </div>
+            
+            {% if accepted_bids %}
+                {% for bid in accepted_bids %}
+                    <div class="card bid-card {% if bid.is_winner %}winner{% endif %} accepted">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="bid-amount">₹{{ bid.bid_amount }}</div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="bidder-info">
+                                        <strong>{{ bid.bidder.first_name|default:bid.bidder.username }} {{ bid.bidder.surname|default:"" }}</strong>
+                                        <br>
+                                        <small>@{{ bid.bidder.username }}</small>
+                                        <br>
+                                        <small class="text-muted">{{ bid.created_at|date:"Y-m-d H:i" }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    {% if bid.message %}
+                                        <p class="mb-0"><em>"{{ bid.message }}"</em></p>
+                                    {% else %}
+                                        <p class="mb-0 text-muted">No message</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-2 text-right action-buttons">
+                                    {% if bid.is_winner %}
+                                        <span class="badge winner-badge status-badge">
+                                            <i class="fas fa-trophy"></i> Winner
+                                        </span>
+                                    {% elif has_winner %}
+                                        <!-- <span class="badge badge-secondary">
+                                            <i class="fas fa-check"></i> Winner Selected
+                                        </span> -->
+                                    {% else %}
+                                        <button class="btn btn-warning btn-sm" onclick="manageBid('{{ bid.id }}', 'win')">
+                                            <i class="fas fa-trophy"></i> Win Bid
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-section">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <p>No accepted bids</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Rejected Bids -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="section-header" style="background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);">
+                <h4 class="mb-0">
+                    <i class="fas fa-times-circle"></i>
+                    Rejected Bids ({{ rejected_count }})
+                </h4>
+            </div>
+            
+            {% if rejected_bids %}
+                {% for bid in rejected_bids %}
+                    <div class="card bid-card rejected">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="bid-amount" style="color: #dc3545;">₹{{ bid.bid_amount }}</div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="bidder-info">
+                                        <strong>{{ bid.bidder.first_name|default:bid.bidder.username }} {{ bid.bidder.surname|default:"" }}</strong>
+                                        <br>
+                                        <small>@{{ bid.bidder.username }}</small>
+                                        <br>
+                                        <small class="text-muted">{{ bid.created_at|date:"Y-m-d H:i" }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    {% if bid.message %}
+                                        <p class="mb-0"><em>"{{ bid.message }}"</em></p>
+                                    {% else %}
+                                        <p class="mb-0 text-muted">No message</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <!-- No actions for rejected bids -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-section">
+                    <i class="fas fa-times-circle fa-2x mb-2"></i>
+                    <p>No rejected bids</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function manageBid(bidId, action) {
+    if (action === 'win') {
+        var message = 'Are you sure you want to mark this bid as WINNER? The bidder will receive an email with your contact details.';
+        if (!confirm(message)) {
+            return;
+        }
+    } else {
+        var message = 'Are you sure you want to ' + action + ' this bid?';
+        if (!confirm(message)) {
+            return;
+        }
+    }
+
+    var url = '/member/marketplace/bid/' + bidId + '/' + action + '/';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        if (data.success) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert('Error: ' + data.detail);
+        }
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    // Fallback: try both custom and default cookie names
+    if (!cookieValue && name === 'csrftoken') {
+        cookieValue = getCookie('neighbornet_csrftoken') || getCookie('csrftoken');
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}
