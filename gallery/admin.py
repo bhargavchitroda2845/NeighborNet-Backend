@@ -1,20 +1,40 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import GalleryAlbum, GalleryImage
 
 
 class GalleryImageInline(admin.TabularInline):
     model = GalleryImage
     extra = 1
-    fields = ('image', 'title', 'description', 'order', 'status')
+    fields = ('image_preview', 'image', 'title', 'description', 'order', 'status')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        if obj and obj.display_url:
+            return format_html(
+                '<img src="{}" style="height:56px;width:56px;object-fit:cover;border-radius:6px;" />',
+                obj.display_url,
+            )
+        return '-'
+    image_preview.short_description = 'Preview'
 
 
 @admin.register(GalleryAlbum)
 class GalleryAlbumAdmin(admin.ModelAdmin):
-    list_display = ('title', 'member', 'visibility', 'status', 'total_images', 'created_at')
+    list_display = ('cover_preview', 'title', 'member', 'visibility', 'status', 'total_images', 'created_at')
     list_filter = ('status', 'visibility', 'created_at')
     search_fields = ('title', 'description', 'member__username', 'member__first_name', 'member__surname')
-    readonly_fields = ('created_at', 'updated_at', 'published_at')
+    readonly_fields = ('cover_preview', 'created_at', 'updated_at', 'published_at')
     inlines = [GalleryImageInline]
+
+    def cover_preview(self, obj):
+        if obj and obj.display_url:
+            return format_html(
+                '<img src="{}" style="height:56px;width:56px;object-fit:cover;border-radius:6px;" />',
+                obj.display_url,
+            )
+        return '-'
+    cover_preview.short_description = 'Cover'
     
     def total_images(self, obj):
         """Return total number of images in the album"""
@@ -24,10 +44,19 @@ class GalleryAlbumAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'album', 'get_member', 'title', 'status', 'order', 'created_at')
+    list_display = ('image_preview', 'id', 'album', 'get_member', 'title', 'status', 'order', 'created_at')
     list_filter = ('status', 'created_at')
     search_fields = ('title', 'description', 'album__title', 'album__member__username', 'album__member__first_name', 'album__member__surname')
-    readonly_fields = ('created_at', 'published_at')
+    readonly_fields = ('image_preview', 'created_at', 'published_at')
+
+    def image_preview(self, obj):
+        if obj and obj.display_url:
+            return format_html(
+                '<img src="{}" style="height:56px;width:56px;object-fit:cover;border-radius:6px;" />',
+                obj.display_url,
+            )
+        return '-'
+    image_preview.short_description = 'Image'
     
     def get_member(self, obj):
         """Return the member who owns the album"""
