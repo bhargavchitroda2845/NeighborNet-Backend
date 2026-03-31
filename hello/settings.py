@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'adminlte4',
-    'adminlte4_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
