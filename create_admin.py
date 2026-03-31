@@ -43,10 +43,9 @@ def load_minimal_data():
 
     print(f"Loaded {len(data)} objects from JSON.")
 
+    # Order ensures Countries exist before Categories
     model_order = [
         'member.country',
-        'member.state',
-        'member.city',
         'business.businesscategory',
         'news.category',
         'donation.donationsubject'

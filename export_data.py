@@ -8,10 +8,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hello.settings')
 django.setup()
 
 # List of specific models to export (AppLabel:ModelName)
-# Based on your request: only countries, cities, and categories.
-# Excludes members, marketplace items, news items, etc.
+# EXCLUDING Cities to speed up production deployment
 target_models = {
-    'member': ['Country', 'State', 'City'],
+    'member': ['Country'], # Removed City and State to keep build fast
     'business': ['BusinessCategory'],
     'news': ['Category'],
     'donation': ['DonationSubject'],
@@ -39,4 +38,4 @@ for app_label, model_names in target_models.items():
 with open('db.json', 'w', encoding='utf-8') as f:
     json.dump(all_data, f, indent=2, ensure_ascii=False)
 
-print("Export complete: db.json created with only Countries, Cities, and Categories.")
+print("Export complete: db.json created WITHOUT Cities for fast deployment.")
