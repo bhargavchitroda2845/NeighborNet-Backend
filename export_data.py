@@ -7,10 +7,11 @@ from django.core import serializers
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hello.settings')
 django.setup()
 
-# List of specific models to export (AppLabel:ModelName)
+# Full list of models to export for the Neon database 
+# (Country, State, City, Categories, Members, and Users)
 target_models = {
     'auth': ['User'],
-    'member': ['Country', 'Member', 'MemberDetail'],
+    'member': ['Country', 'State', 'City', 'Member', 'MemberDetail'],
     'business': ['BusinessCategory'],
     'news': ['Category'],
     'donation': ['DonationSubject'],
@@ -38,4 +39,4 @@ for app_label, model_names in target_models.items():
 with open('db.json', 'w', encoding='utf-8') as f:
     json.dump(all_data, f, indent=2, ensure_ascii=False)
 
-print("Export complete: db.json created WITHOUT Cities for fast deployment.")
+print("Export complete: FULL db.json created for direct Neon upload.")
