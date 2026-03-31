@@ -15,6 +15,7 @@ urlpatterns = [
     path('donation/', include('donation.urls')),
     path('gallery/', include('gallery.urls')),
     path('business/', include('business.urls')),
+    path('career/', include('career.urls')),
 
     path('api/public/profile/', member_views.public_profile_api),
     path('api/master/countries/', member_views.country_list_api),

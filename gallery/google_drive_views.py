@@ -8,7 +8,7 @@ from googleapiclient.http import MediaIoBaseDownload
 import io
 from google_auth_oauthlib.flow import Flow
 from .models import GoogleDriveConnection, GalleryImage, GalleryAlbum
-from .google_drive_utils import get_drive_service, create_bb_album_folder, create_folder
+from .google_drive_utils import get_drive_service, create_gallery_folder, create_folder
 from member.views import get_logged_in_member
 
 # Scopes required for the application
@@ -128,9 +128,9 @@ def google_drive_callback(request):
         connection.set_credentials(credentials)
         connection.save()
         
-        # Create the 'bb_album' folder if it doesn't exist
+        # Create the 'gallery' folder under NeighborNet if it doesn't exist
         service = get_drive_service(connection)
-        folder_id = create_bb_album_folder(service)
+        folder_id = create_gallery_folder(service)
         connection.folder_id = folder_id
         connection.save()
         
@@ -169,7 +169,7 @@ def check_drive_connection(request):
         "connected": True,
         "folder_id": connection.folder_id,
         "folder_exists": folder_exists,
-        "error": "Root folder 'bb_album' not found. Please reconnect." if not folder_exists else None
+        "error": "Root folder 'gallery' not found inside 'NeighborNet'. Please reconnect." if not folder_exists else None
     })
 
 def serve_drive_image(request, file_id):

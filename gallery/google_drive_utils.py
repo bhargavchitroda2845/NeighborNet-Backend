@@ -5,6 +5,20 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 from django.conf import settings
 
+
+def _find_folder(service, name, parent_id=None):
+    if parent_id:
+        query = (
+            f"name = '{name}' and '{parent_id}' in parents and "
+            "mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+        )
+    else:
+        query = f"name = '{name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    files = results.get('files', [])
+    return files[0]['id'] if files else None
+
 def get_drive_service(connection):
     """Returns a Google Drive service object from a GoogleDriveConnection instance"""
     from google.auth.transport.requests import Request
@@ -34,29 +48,45 @@ def get_drive_service(connection):
     
     return build('drive', 'v3', credentials=creds)
 
-def create_bb_album_folder(service):
-    """Creates the 'bb_album' folder in the user's Google Drive and returns its ID"""
-    file_metadata = {
-        'name': 'bb_album',
-        'mimeType': 'application/vnd.google-apps.folder'
-    }
-    # Check if folder already exists
-    query = "name = 'bb_album' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
-    results = service.files().list(q=query, fields="files(id, name)").execute()
-    files = results.get('files', [])
-    
-    if files:
-        return files[0]['id']
-    
-    # Create new folder
-    folder = service.files().create(body=file_metadata, fields='id').execute()
+
+def ensure_neighbornet_root_folder(service):
+    """Creates/fetches the NeighborNet root folder in Drive."""
+    existing_id = _find_folder(service, 'NeighborNet')
+    if existing_id:
+        return existing_id
+
+    folder = service.files().create(
+        body={
+            'name': 'NeighborNet',
+            'mimeType': 'application/vnd.google-apps.folder',
+        },
+        fields='id'
+    ).execute()
     folder_id = folder.get('id')
-    
-    # Make folder public
     if folder_id:
         make_file_public(service, folder_id)
-        
     return folder_id
+
+def create_gallery_folder(service):
+    """Creates/fetches NeighborNet/gallery and returns gallery folder ID."""
+    root_id = ensure_neighbornet_root_folder(service)
+    return create_folder(service, 'gallery', root_id)
+
+
+def create_careers_folder(service):
+    """Creates/fetches NeighborNet/careers and returns careers folder ID."""
+    root_id = ensure_neighbornet_root_folder(service)
+    return create_folder(service, 'careers', root_id)
+
+
+def create_bb_album_folder(service):
+    """Backward-compatible alias for NeighborNet/gallery folder."""
+    return create_gallery_folder(service)
+
+
+def create_bb_careers_folder(service):
+    """Backward-compatible alias for NeighborNet/careers folder."""
+    return create_careers_folder(service)
 
 def create_folder(service, name, parent_id):
     """Creates a folder inside another folder and returns its ID"""

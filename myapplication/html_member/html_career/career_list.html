@@ -1,0 +1,179 @@
+{% extends "html_member/base.html" %}
+
+{% block nav_career_menu %}menu-open{% endblock %}
+{% block nav_career_list %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Career</h1>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="{% url 'career:member_career_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Career Post
+            </a>
+        </div>
+    </div>
+
+    <div class="card card-outline card-primary mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-search"></i>
+                Search My Career Posts
+            </h3>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'career:member_career_list' %}" class="form-inline">
+                <div class="input-group w-100">
+                    <input type="text"
+                           name="q"
+                           class="form-control"
+                           placeholder="Search by title, company, skills, location..."
+                           value="{{ request.GET.q|default:'' }}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        {% if request.GET.q %}
+                        <a href="{% url 'career:member_career_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Clear
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-outline card-secondary mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-user-clock"></i>
+                Draft / In Review / Rejected Posts
+            </h3>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-bordered table-striped table-hover text-nowrap m-0 js-data-table"
+                   data-page-length="10"
+                   data-order-col="6"
+                   data-order-dir="desc">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>CTC: ___(LPA)</th>
+                        <th>PDF</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th width="120">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in unpublished_posts %}
+                    <tr>
+                        <td>
+                            {% if item.post_type == "recruiter" %}
+                                <span class="badge badge-info">Recruiter</span>
+                            {% else %}
+                                <span class="badge badge-success">Job Seeker</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.company_name|default:"-" }}</td>
+                        <td>{% if item.post_type == 'recruiter' %}{% if item.package_lpa %}{{ item.package_lpa }} (LPA){% else %}-{% endif %}{% else %}{% if item.expected_lpa %}{{ item.expected_lpa }} (LPA){% elif item.current_ctc_lpa %}{{ item.current_ctc_lpa }} (LPA){% else %}-{% endif %}{% endif %}</td>
+                        <td>{{ item.document_filename|default:"-" }}</td>
+                        <td>{{ item.location|default:"-" }}</td>
+                        <td>
+                            {% if item.status == "inreview" %}
+                                <span class="badge badge-primary">In Review</span>
+                            {% elif item.status == "rejected" %}
+                                <span class="badge badge-danger">Rejected</span>
+                            {% else %}
+                                <span class="badge badge-warning">Draft</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <a href="{% url 'career:member_career_edit' item.id %}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'career:member_career_delete' item.id %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">No draft/in-review/rejected posts found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card card-outline card-success">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-check-circle"></i>
+                Published Posts
+            </h3>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-bordered table-striped table-hover text-nowrap m-0 js-data-table"
+                   data-page-length="10"
+                   data-order-col="6"
+                   data-order-dir="desc">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>CTC: ___(LPA)</th>
+                        <th>PDF</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Published At</th>
+                        <th width="120">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in published_posts %}
+                    <tr>
+                        <td>
+                            {% if item.post_type == "recruiter" %}
+                                <span class="badge badge-info">Recruiter</span>
+                            {% else %}
+                                <span class="badge badge-success">Job Seeker</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.company_name|default:"-" }}</td>
+                        <td>{% if item.post_type == 'recruiter' %}{% if item.package_lpa %}{{ item.package_lpa }} (LPA){% else %}-{% endif %}{% else %}{% if item.expected_lpa %}{{ item.expected_lpa }} (LPA){% elif item.current_ctc_lpa %}{{ item.current_ctc_lpa }} (LPA){% else %}-{% endif %}{% endif %}</td>
+                        <td>{{ item.document_filename|default:"-" }}</td>
+                        <td>{{ item.location|default:"-" }}</td>
+                        <td><span class="badge badge-success">Published</span></td>
+                        <td>{{ item.published_at|date:"Y-m-d H:i"|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'career:member_career_edit' item.id %}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'career:member_career_delete' item.id %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">No published posts found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

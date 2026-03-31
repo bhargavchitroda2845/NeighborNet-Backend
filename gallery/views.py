@@ -7,7 +7,7 @@ from django.db.models import Q, Max
 import os
 
 from .models import GalleryAlbum, GalleryImage, GoogleDriveConnection
-from .google_drive_utils import get_drive_service, upload_file_to_drive, delete_file_from_drive, create_folder
+from .google_drive_utils import get_drive_service, upload_file_to_drive, delete_file_from_drive, create_folder, create_gallery_folder
 from django.urls import reverse
 
 from member.models import Member
@@ -213,9 +213,13 @@ def album_form(request, pk=None):
                 if connection and connection.folder_id:
                     service = get_drive_service(connection)
                     if service:
+                        gallery_root_id = create_gallery_folder(service)
+                        if connection.folder_id != gallery_root_id:
+                            connection.folder_id = gallery_root_id
+                            connection.save(update_fields=["folder_id"])
                         # Ensure album folder exists
                         if not album.drive_folder_id:
-                            album.drive_folder_id = create_folder(service, album.title, connection.folder_id)
+                            album.drive_folder_id = create_folder(service, album.title, gallery_root_id)
                             album.save()
                             
                         # Delete old cover and upload new
@@ -258,8 +262,12 @@ def album_form(request, pk=None):
                 if connection and connection.folder_id:
                     service = get_drive_service(connection)
                     if service:
+                        gallery_root_id = create_gallery_folder(service)
+                        if connection.folder_id != gallery_root_id:
+                            connection.folder_id = gallery_root_id
+                            connection.save(update_fields=["folder_id"])
                         # Create album-specific folder
-                        album_folder_id = create_folder(service, created_album.title, connection.folder_id)
+                        album_folder_id = create_folder(service, created_album.title, gallery_root_id)
                         created_album.drive_folder_id = album_folder_id
                         
                         # Reset pointer before upload
@@ -320,9 +328,13 @@ def album_add_images(request, pk):
             if connection and connection.folder_id:
                 service = get_drive_service(connection)
                 if service:
+                    gallery_root_id = create_gallery_folder(service)
+                    if connection.folder_id != gallery_root_id:
+                        connection.folder_id = gallery_root_id
+                        connection.save(update_fields=["folder_id"])
                     # Ensure album folder exists
                     if not album.drive_folder_id:
-                        album.drive_folder_id = create_folder(service, album.title, connection.folder_id)
+                        album.drive_folder_id = create_folder(service, album.title, gallery_root_id)
                         album.save()
                         
                     drive_file_id = upload_file_to_drive(service, image, album.drive_folder_id)

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'donation.apps.DonationConfig',
     'gallery',
     'business',
+    'career.apps.CareerConfig',
 ]
 
 

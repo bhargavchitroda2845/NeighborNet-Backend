@@ -290,6 +290,34 @@
                     </ul>
                 </li>
 
+                <!-- CAREER MANAGEMENT -->
+                <li class="nav-item has-treeview {% block nav_career_menu %}{% endblock %}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-tie"></i>
+                        <p>
+                            Career
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'career:member_career_add' %}"
+                            class="nav-link {% block nav_career_add %}{% endblock %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Career Post</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'career:member_career_list' %}"
+                            class="nav-link {% block nav_career_list %}{% endblock %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>My Career Posts</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </nav>
     </div>
