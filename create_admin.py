@@ -104,5 +104,5 @@ def load_minimal_data():
         print(f"  - Successfully imported/updated {count} {model_label} records.")
 
 if __name__ == '__main__':
-    load_minimal_data()
+    # load_minimal_data() # DEPRECATED: Use upload_to_neon.py locally for faster deployment
     print("Initialization complete.")
