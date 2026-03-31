@@ -1,0 +1,1523 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-01-30T09:26:34.613Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "1 - Kartik Acharya",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-01-30T09:58:47.539Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "2 - man kj",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-01-30T10:34:07.182Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "3 - kar jkl",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-01-30T10:35:41.384Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "4 - Kartik Acharya",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-01-30T10:45:02.936Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "5 - home JAKAL",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-01-30T10:50:28.723Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "dhaval",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-01-30T10:50:40.110Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "dhaval",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"First name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-01-30T10:51:10.526Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "dhaval",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Staff status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-02-02T08:29:47.283Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Detail of 5 - home JAKAL",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-02-02T10:41:31.070Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "6",
+    "object_repr": "6 - man makam",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-02-02T11:02:05.395Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "4",
+    "object_repr": "Detail of 5 - home JAKAL",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Middle name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-02-10T04:20:16.262Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "event",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-02-10T04:22:21.611Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "gandhi jaynti",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-02-10T04:23:48.231Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "12th celebrate",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-02-10T04:34:40.330Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "12th celebrate",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is published\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-02-10T04:35:37.540Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "12th celebrate",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-02-10T10:15:38.108Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "event this",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-02-10T10:19:57.313Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "event",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-02-10T10:58:40.514Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "event",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-02-10T10:59:08.164Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "gandhi",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-02-10T11:16:06.830Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "2",
+    "object_repr": "Births & Announcements",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-02-10T11:16:18.096Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "Marriages & Engagements",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-02-10T11:16:27.065Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "4",
+    "object_repr": "Achievements & Awards",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-02-10T11:16:37.306Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Obituaries & Condolences",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-02-10T11:16:48.300Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "6",
+    "object_repr": "Housewarming & Property Updates",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-02-10T11:16:58.151Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "7",
+    "object_repr": "Business Openings & Ventures",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-02-10T11:17:06.935Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "8",
+    "object_repr": "Community Events & Get-Togethers",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2026-02-10T11:17:16.388Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "9",
+    "object_repr": "Farewells & Retirements",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2026-02-10T11:17:24.487Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "10",
+    "object_repr": "Health & Wellbeing Updates",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2026-02-10T11:17:32.796Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "11",
+    "object_repr": "Education Milestones",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2026-02-10T11:17:40.567Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "12",
+    "object_repr": "Volunteer & Social Work",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2026-02-10T11:17:48.844Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "13",
+    "object_repr": "Hobbies & Interests",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2026-02-11T08:16:09.052Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "105",
+    "object_repr": "Nisha Completes  Workshop",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\", \"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2026-02-11T08:17:30.288Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "84",
+    "object_repr": "Farewell Ceremony  Nisha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2026-02-11T09:40:15.901Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "7 - bhargav kk",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2026-02-11T10:58:21.900Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "event",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2026-02-11T10:58:43.583Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "14",
+    "object_repr": "Event",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2026-02-11T11:26:15.014Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "314",
+    "object_repr": "Nisha Completes Art Workshop",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Slug\", \"Published at\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2026-02-11T11:28:06.177Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "315",
+    "object_repr": "this is the check the time",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2026-02-11T11:28:14.863Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "315",
+    "object_repr": "this is the check the time",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2026-02-11T11:29:27.490Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "315",
+    "object_repr": "this is the check the time",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2026-02-11T11:30:01.910Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "315",
+    "object_repr": "this is the check the time",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2026-02-11T11:32:09.525Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "315",
+    "object_repr": "this is the check the time",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2026-02-11T11:44:10.258Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "416",
+    "object_repr": "this is the news thing",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2026-02-11T11:44:36.385Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "416",
+    "object_repr": "this is the news thing",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2026-02-11T11:46:40.465Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "416",
+    "object_repr": "this is the news thing",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2026-02-11T11:51:12.072Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "417",
+    "object_repr": "this is the now checek",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2026-02-11T11:52:18.882Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "417",
+    "object_repr": "this is the now check",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\", \"Content\", \"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 49,
+  "fields": {
+    "action_time": "2026-02-11T11:55:06.307Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "418",
+    "object_repr": "this si the new update",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 50,
+  "fields": {
+    "action_time": "2026-02-11T11:55:38.165Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "418",
+    "object_repr": "this si the new updat",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 51,
+  "fields": {
+    "action_time": "2026-02-11T11:58:30.748Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "419",
+    "object_repr": "this is the date darf",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 52,
+  "fields": {
+    "action_time": "2026-02-11T11:59:25.761Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "419",
+    "object_repr": "this is the date publish",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 53,
+  "fields": {
+    "action_time": "2026-02-11T11:59:53.200Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "418",
+    "object_repr": "this si the new updat",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 54,
+  "fields": {
+    "action_time": "2026-02-11T12:00:02.383Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "419",
+    "object_repr": "this is the date publish",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 55,
+  "fields": {
+    "action_time": "2026-02-12T08:20:28.919Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "420",
+    "object_repr": "this is the first news",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 56,
+  "fields": {
+    "action_time": "2026-02-13T09:17:04.040Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "528",
+    "object_repr": "this is the permission news in the check",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 57,
+  "fields": {
+    "action_time": "2026-02-13T09:20:13.254Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "526",
+    "object_repr": "this is the news in the thing",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 58,
+  "fields": {
+    "action_time": "2026-02-13T09:21:54.397Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "526",
+    "object_repr": "this is the news in the",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\", \"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 59,
+  "fields": {
+    "action_time": "2026-02-13T10:35:42.056Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "629",
+    "object_repr": "this is the new in the sytem in the thinde in the without the picture",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Slug\", \"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 60,
+  "fields": {
+    "action_time": "2026-02-13T10:59:46.747Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "1",
+    "object_repr": "this is the first buyer",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 61,
+  "fields": {
+    "action_time": "2026-02-13T11:02:59.797Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "2",
+    "object_repr": "this si the seller",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 62,
+  "fields": {
+    "action_time": "2026-02-13T11:22:21.218Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "3",
+    "object_repr": "this is the first the rental",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 63,
+  "fields": {
+    "action_time": "2026-02-13T11:46:23.327Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "5",
+    "object_repr": "this is the admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 64,
+  "fields": {
+    "action_time": "2026-02-16T08:05:27.484Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "7",
+    "object_repr": "this is the test in the thing",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 65,
+  "fields": {
+    "action_time": "2026-02-16T08:06:02.748Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "7",
+    "object_repr": "this is the test",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 66,
+  "fields": {
+    "action_time": "2026-02-16T08:44:20.098Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "2",
+    "object_repr": "this si the seller",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 67,
+  "fields": {
+    "action_time": "2026-02-16T08:45:05.090Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "1",
+    "object_repr": "this is the first buyer",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 68,
+  "fields": {
+    "action_time": "2026-02-16T08:56:08.710Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "109",
+    "object_repr": "this is the published check",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 69,
+  "fields": {
+    "action_time": "2026-02-16T08:56:43.101Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "109",
+    "object_repr": "this is the published check",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 70,
+  "fields": {
+    "action_time": "2026-02-16T09:22:45.709Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "110",
+    "object_repr": "this is the thing to chek the ording",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 71,
+  "fields": {
+    "action_time": "2026-02-16T09:39:50.660Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "112",
+    "object_repr": "this is the thinf in the approve",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 72,
+  "fields": {
+    "action_time": "2026-02-16T09:49:15.092Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "111",
+    "object_repr": "this is the chekec in the thing in the issue in the oder",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 73,
+  "fields": {
+    "action_time": "2026-02-16T09:59:32.140Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "111",
+    "object_repr": "this is the chekec in the thing in the issue in the oder",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 74,
+  "fields": {
+    "action_time": "2026-02-16T10:00:10.534Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "111",
+    "object_repr": "this is the chekec in the thing in the issue in the oder",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 75,
+  "fields": {
+    "action_time": "2026-02-16T10:00:30.957Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "111",
+    "object_repr": "this is the chekec in the thing in the issue in the oder",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 76,
+  "fields": {
+    "action_time": "2026-02-16T10:54:08.202Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "5 - kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Middle name\", \"Surname\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 77,
+  "fields": {
+    "action_time": "2026-02-16T11:02:00.075Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "113",
+    "object_repr": "I want PG on RENT",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 78,
+  "fields": {
+    "action_time": "2026-02-17T11:40:50.761Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "10",
+    "object_repr": "10 - Bhargav Chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 79,
+  "fields": {
+    "action_time": "2026-02-17T11:41:29.722Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "10",
+    "object_repr": "10 - Bhargav Chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 80,
+  "fields": {
+    "action_time": "2026-02-17T11:42:18.709Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "10",
+    "object_repr": "10 - Bhargav Chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 81,
+  "fields": {
+    "action_time": "2026-02-17T11:44:06.229Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "8",
+    "object_repr": "8 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 82,
+  "fields": {
+    "action_time": "2026-02-17T11:46:56.678Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "11",
+    "object_repr": "11 - bhargav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 83,
+  "fields": {
+    "action_time": "2026-02-17T11:54:41.701Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "12",
+    "object_repr": "12 - bhargav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 84,
+  "fields": {
+    "action_time": "2026-02-18T03:56:52.349Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "13",
+    "object_repr": "13 - kartik acharya",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 85,
+  "fields": {
+    "action_time": "2026-02-18T04:08:17.725Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "14",
+    "object_repr": "14 - rose dark",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 86,
+  "fields": {
+    "action_time": "2026-02-18T04:15:51.299Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "14",
+    "object_repr": "14 - rose dark",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 87,
+  "fields": {
+    "action_time": "2026-02-18T04:17:25.982Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "13",
+    "object_repr": "13 - kartik acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email id\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 88,
+  "fields": {
+    "action_time": "2026-02-18T04:18:39.148Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "14",
+    "object_repr": "14 - rose dark",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Username\", \"Password\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 89,
+  "fields": {
+    "action_time": "2026-02-18T09:03:53.606Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "15",
+    "object_repr": "15 - bhragav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 90,
+  "fields": {
+    "action_time": "2026-02-18T09:24:59.453Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "16",
+    "object_repr": "16 - bhargav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 91,
+  "fields": {
+    "action_time": "2026-02-18T09:32:39.047Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "17",
+    "object_repr": "17 - BHARGAV CHITRODA",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 92,
+  "fields": {
+    "action_time": "2026-02-18T09:35:02.968Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "18",
+    "object_repr": "18 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 93,
+  "fields": {
+    "action_time": "2026-02-18T09:47:32.399Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "19",
+    "object_repr": "19 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 94,
+  "fields": {
+    "action_time": "2026-02-18T09:58:21.246Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "20",
+    "object_repr": "20 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 95,
+  "fields": {
+    "action_time": "2026-02-18T10:07:19.983Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "21",
+    "object_repr": "21 - Kartikbhai Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 96,
+  "fields": {
+    "action_time": "2026-02-18T10:33:46.955Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "22",
+    "object_repr": "22 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 97,
+  "fields": {
+    "action_time": "2026-02-18T10:42:25.082Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "630",
+    "object_repr": "this is the thinf in the member",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 98,
+  "fields": {
+    "action_time": "2026-02-18T10:44:19.533Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "114",
+    "object_repr": "this is the market place thing",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 99,
+  "fields": {
+    "action_time": "2026-02-18T11:14:54.256Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "23",
+    "object_repr": "23 - man joshi",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 100,
+  "fields": {
+    "action_time": "2026-02-18T11:32:01.474Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "24",
+    "object_repr": "24 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 101,
+  "fields": {
+    "action_time": "2026-02-18T11:36:44.316Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "115",
+    "object_repr": "i want office on rent",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 102,
+  "fields": {
+    "action_time": "2026-02-19T08:17:51.216Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "27",
+    "object_repr": "27 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 103,
+  "fields": {
+    "action_time": "2026-02-19T08:29:53.083Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "26",
+    "object_repr": "26 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 104,
+  "fields": {
+    "action_time": "2026-02-19T08:42:19.104Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "26",
+    "object_repr": "26 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 105,
+  "fields": {
+    "action_time": "2026-02-19T08:43:07.384Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "26",
+    "object_repr": "26 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 106,
+  "fields": {
+    "action_time": "2026-02-19T08:45:53.971Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "25",
+    "object_repr": "25 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 107,
+  "fields": {
+    "action_time": "2026-02-19T08:49:30.976Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "25",
+    "object_repr": "25 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 108,
+  "fields": {
+    "action_time": "2026-02-19T08:50:26.806Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "25",
+    "object_repr": "25 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 109,
+  "fields": {
+    "action_time": "2026-02-19T08:52:58.466Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "25",
+    "object_repr": "25 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email id\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 110,
+  "fields": {
+    "action_time": "2026-02-19T09:05:52.281Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "28",
+    "object_repr": "28 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 111,
+  "fields": {
+    "action_time": "2026-02-19T09:10:42.389Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "28",
+    "object_repr": "28 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 112,
+  "fields": {
+    "action_time": "2026-02-19T09:11:25.196Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "28",
+    "object_repr": "28 - Kartik Acharya",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 113,
+  "fields": {
+    "action_time": "2026-02-19T09:21:31.858Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "29",
+    "object_repr": "29 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 114,
+  "fields": {
+    "action_time": "2026-02-19T09:24:16.926Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "29",
+    "object_repr": "29 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 115,
+  "fields": {
+    "action_time": "2026-02-19T09:25:25.487Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "29",
+    "object_repr": "29 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 116,
+  "fields": {
+    "action_time": "2026-02-19T09:26:07.010Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "29",
+    "object_repr": "29 - bhrgav chitroda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Approval status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 117,
+  "fields": {
+    "action_time": "2026-02-19T11:09:08.036Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "23775",
+    "object_repr": "Gujrat (India)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+  }
+}
+]
