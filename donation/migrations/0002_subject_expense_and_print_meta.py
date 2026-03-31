@@ -24,6 +24,7 @@ def reverse_noop(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
+    atomic = False
 
     dependencies = [
         ("donation", "0001_initial"),
