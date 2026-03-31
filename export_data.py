@@ -8,9 +8,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hello.settings')
 django.setup()
 
 # List of specific models to export (AppLabel:ModelName)
-# EXCLUDING Cities to speed up production deployment
 target_models = {
-    'member': ['Country'], # Removed City and State to keep build fast
+    'auth': ['User'],
+    'member': ['Country', 'Member', 'MemberDetail'],
     'business': ['BusinessCategory'],
     'news': ['Category'],
     'donation': ['DonationSubject'],
