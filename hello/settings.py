@@ -30,6 +30,7 @@ PASSWORD_RESET_TOKEN_MINUTES = int(os.getenv("PASSWORD_RESET_TOKEN_MINUTES", "30
 INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
+    'adminlte4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
