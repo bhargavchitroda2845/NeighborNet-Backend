@@ -14,16 +14,26 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-this-in-production')
-DEBUG = os.getenv('DEBUG', 'True').lower() in ('1', 'true', 'yes')
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+
+# Render uses a proxy for SSL.
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Explicitly trust the onrender.com subdomains for CSRF
+    CSRF_TRUSTED_ORIGINS = [f"https://{h.strip()}" for h in ALLOWED_HOSTS if h.strip() and h != '*']
+    if not CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
 
 # -------------------------------
 # APPLICATIONS
 # -------------------------------
 BACKEND_BASE_URL = os.getenv("BACKEND_BASE_URL", "http://localhost:8000").rstrip("/")
-FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000").rstrip("/")
-MEMBER_LOGIN_URL = os.getenv("MEMBER_LOGIN_URL", f"{FRONTEND_BASE_URL}/login/")
+FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", BACKEND_BASE_URL).rstrip("/")
+MEMBER_LOGIN_URL = os.getenv("MEMBER_LOGIN_URL", f"{FRONTEND_BASE_URL}/member/login/")
 SITE_BASE_URL = os.getenv("SITE_BASE_URL", BACKEND_BASE_URL)
 PASSWORD_RESET_TOKEN_MINUTES = int(os.getenv("PASSWORD_RESET_TOKEN_MINUTES", "30"))
 
@@ -176,24 +186,18 @@ REPLY_TO_EMAIL = os.getenv('REPLY_TO_EMAIL', MAIL_ACCOUNT_EMAIL)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# -------------------------------
 # SESSION CONFIGURATION
-# -------------------------------
-
-# Session cookie settings for better cross-origin/IP support
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 7 days in seconds
-SESSION_COOKIE_DOMAIN = None  # Allow cookies on current domain (works with IP too)
+SESSION_COOKIE_DOMAIN = None
 SESSION_COOKIE_PATH = '/'
-SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'  # Required for redirects on HTTP (localhost)
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # CSRF cookie settings
-CSRF_COOKIE_DOMAIN = None  # Allow cookies on current domain
+CSRF_COOKIE_DOMAIN = None
 CSRF_COOKIE_PATH = '/'
-CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = 'Lax'  # Required for redirects on HTTP (localhost)
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 # -------------------------------
 # LOGIN / LOGOUT

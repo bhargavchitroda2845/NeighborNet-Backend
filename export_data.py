@@ -11,10 +11,14 @@ django.setup()
 # (Country, State, City, Categories, Members, and Users)
 target_models = {
     'auth': ['User'],
-    'member': ['Country', 'State', 'City', 'Member', 'MemberDetail'],
-    'business': ['BusinessCategory'],
-    'news': ['Category'],
-    'donation': ['DonationSubject'],
+    'member': ['Country', 'State', 'City', 'Member', 'MemberDetail', 'MemberPasswordResetToken', 'OTPVerification'],
+    'business': ['BusinessCategory', 'Business'],
+    'news': ['Category', 'News'],
+    'donation': ['DonationSubject', 'Donation', 'Expense'],
+    'marketplace': ['BnsModel', 'Bid'],
+    'gallery': ['GalleryAlbum', 'GalleryImage', 'GoogleDriveConnection'],
+    'career': ['CareerPost'],
+    'home': ['Contact'],
 }
 
 all_data = []

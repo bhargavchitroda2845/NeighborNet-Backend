@@ -12,20 +12,20 @@ import dj_database_url
 # -------------------------------------------------------------
 
 # --- CONFIGURATION ---
-# Replace with your actual Neon connection string:
 NEON_DATABASE_URL = input("Enter your Neon DATABASE_URL: ").strip()
+
+# URL Cleanup: Handles accidental psql command pasting or extra quotes
+NEON_DATABASE_URL = NEON_DATABASE_URL.replace('psql "', '').replace('"', '').split(' ')[0].strip()
 
 if not NEON_DATABASE_URL:
     print("Error: No Database URL provided. Exiting.")
     exit(1)
 
-# Configure Django to use the Neon Database temporarily
+# Set the Neon Database URL as an environment variable BEFORE django.setup()
+# This ensures dj_database_url picks it up correctly in settings.py
+os.environ['DATABASE_URL'] = NEON_DATABASE_URL
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hello.settings')
 django.setup()
-
-# Dynamically override the database setting to point to Neon
-from django.conf import settings
-settings.DATABASES['default'] = dj_database_url.parse(NEON_DATABASE_URL)
 
 from django.apps import apps
 from django.db import transaction
@@ -50,55 +50,99 @@ def upload_data():
         'member.city',
         'member.member',
         'member.memberdetail',
+        'member.memberpasswordresettoken',
+        'member.otpverification',
         'business.businesscategory',
+        'business.business',
+        'marketplace.bnsmodel',
+        'marketplace.bid',
         'news.category',
-        'donation.donationsubject'
+        'news.news',
+        'donation.donationsubject',
+        'donation.donation',
+        'donation.expense',
+        'gallery.galleryalbum',
+        'gallery.galleryimage',
+        'gallery.googledriveconnection',
+        'career.careerpost',
+        'home.contact'
     ]
 
     objects_by_model = {m: [o for o in data if o['model'] == m] for m in model_order}
+
+    BATCH_SIZE = 500
 
     for model_label in model_order:
         items = objects_by_model.get(model_label, [])
         if not items:
             continue
         
-        print(f"Uploading {len(items)} records to {model_label}...")
+        print(f"Uploading {len(items)} records to {model_label} (Batch Size: {BATCH_SIZE})...")
         app_label, model_name = model_label.split('.')
         model = apps.get_model(app_label, model_name)
         
-        count = 0
-        failed = 0
-        # Use simple progress tracking
-        total = len(items)
+        # Determine PK and fields to update
+        pk_name = model._meta.pk.name
+        all_fields = [f.name for f in model._meta.fields]
+        update_fields = [f for f in all_fields if f != pk_name]
         
-        with transaction.atomic():
-            for i, obj_data in enumerate(items):
-                pk = obj_data['pk']
-                fields = obj_data['fields']
-                
-                # Handle Foreign Keys
-                refined_fields = {}
-                for field_name, value in fields.items():
-                    try:
-                        field_obj = model._meta.get_field(field_name)
-                        if field_obj.is_relation and value is not None:
-                            refined_fields[f"{field_name}_id"] = value
-                        else:
-                            refined_fields[field_name] = value
-                    except:
-                        refined_fields[field_name] = value
-
+        instances = []
+        for i, obj_data in enumerate(items):
+            pk_val = obj_data['pk']
+            fields = obj_data['fields']
+            
+            # Handle Foreign Keys and field mapping
+            refined_fields = {pk_name: pk_val}
+            for field_name, value in fields.items():
                 try:
-                    # update_or_create is safer; it updates if ID exists, creates if not.
-                    model.objects.update_or_create(pk=pk, defaults=refined_fields)
-                    count += 1
-                except Exception as e:
-                    failed += 1
-                
-                if (i + 1) % 500 == 0:
-                    print(f"  - Progress: {i+1}/{total}...")
+                    field_obj = model._meta.get_field(field_name)
+                    if field_obj.is_relation:
+                        # Skip many-to-many fields (they aren't supported by bulk_create)
+                        if field_obj.many_to_many:
+                            continue
+                        refined_fields[f"{field_name}_id"] = value
+                    else:
+                        refined_fields[field_name] = value
+                except:
+                    # In case of missing fields in model (e.g. removed fields in db.json)
+                    pass
+            
+            instances.append(model(**refined_fields))
 
-        print(f"  - Finished {model_label}: {count} successful, {failed} failed.")
+        # Perform Bulk Upload in batches
+        try:
+            with transaction.atomic():
+                # Django 4.1+ supports update_conflicts
+                # This allows re-running the script safely
+                model.objects.bulk_create(
+                    instances,
+                    batch_size=BATCH_SIZE,
+                    update_conflicts=True,
+                    update_fields=update_fields,
+                    unique_fields=[pk_name]
+                )
+            print(f"  - Finished {model_label}: {len(instances)} records synced.")
+        except Exception as e:
+            print(f"  - Error in bulk upload for {model_label}: {e}")
+            print(f"  - Falling back to individual updates (Safe Mode)...")
+            
+            count = 0
+            failed = 0
+            for inst in instances:
+                try:
+                    with transaction.atomic():
+                        # Use update_or_create logic to handle pre-existing data
+                        defaults = {f: getattr(inst, f"{f}_id" if hasattr(inst, f"{f}_id") else f) for f in update_fields}
+                        model.objects.update_or_create(**{pk_name: inst.pk}, defaults=defaults)
+                        count += 1
+                except Exception as row_err:
+                    failed += 1
+                    # Skip problematic rows instead of crashing
+                    continue
+            
+            print(f"  - Finished {model_label}: {count} successful, {failed} skipped.")
+
+
 
     print("\nSUCCESS! Your Neon database is now fully populated with 14,000+ records.")
     print("Every future Render deployment will now be super fast!")

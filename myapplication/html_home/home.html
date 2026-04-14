@@ -1,135 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ice Cream Delight</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #fff0f5;
-            color: #333;
-        }
+{% extends "html_home/base.html" %}
+{% load static %}
 
-        header {
-            background-color: #ff6699;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+{% block title %}NeighborNet - Community Dashboard{% endblock %}
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        nav {
-            background-color: #ff99cc;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .menu-section {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .flavor-item {
-            display: flex;
-            align-items: center;
-            background-color: #ffe6f0;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 10px;
-            transition: transform 0.2s;
-        }
-
-        .flavor-item:hover {
-            transform: scale(1.03);
-        }
-
-        .flavor-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 2px solid #ff99cc;
-        }
-
-        .flavor-info h3 {
-            margin: 0;
-            color: #ff3399;
-        }
-
-        .flavor-info p {
-            margin: 5px 0 0;
-            font-size: 16px;
-        }
-
-        footer {
-            background-color: #ff6699;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 40px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Ice Cream Delight</h1>
-</header>
-
-
-<section class="menu-section">
-    <div class="flavor-item">
-        <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/ice-cream-1238248_1280.jpg" alt="Chocolate" class="flavor-img">
-        <div class="flavor-info">
-            <h3>Chocolate</h3>
-            <p>Rich and creamy chocolate ice cream.</p>
+{% block content %}
+<!-- Hero -->
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Welcome to NeighborNet</h1>
+        <p class="lead mb-4">Your all-in-one community portal for News, Marketplace, and Connections.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'marketplace:member_marketplace_list' %}" class="btn btn-light btn-lg text-primary fw-bold">Browse Marketplace</a>
+            <a href="{% url 'news:news_list' %}" class="btn btn-outline-light btn-lg">Read News</a>
         </div>
     </div>
+</div>
 
-    <div class="flavor-item">
-        <img src="https://cdn.pixabay.com/photo/2017/01/10/19/05/ice-cream-1969267_1280.jpg" alt="Vanilla" class="flavor-img">
-        <div class="flavor-info">
-            <h3>Vanilla</h3>
-            <p>Classic vanilla flavor made from real beans.</p>
+<div class="container py-5">
+    
+    <!-- News Section -->
+    <div class="row mb-5">
+        <div class="col-12 d-flex justify-content-between align-items-end mb-4">
+            <h2 class="fw-bold"><i class="fa-solid fa-newspaper text-warning me-2"></i>Latest News</h2>
+            <a href="{% url 'news:news_list' %}" class="btn btn-link">View All News</a>
         </div>
+        {% for item in recent_news %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <span class="badge badge-news mb-2">{{ item.category.name|default:"General" }}</span>
+                    <h5 class="card-title fw-bold">{{ item.title }}</h5>
+                    <p class="card-text text-muted small">{{ item.content|truncatewords:20 }}</p>
+                    <p class="mb-0 mt-3 small text-secondary">
+                        <i class="fa-regular fa-clock me-1"></i>{{ item.published_at|date:"M d, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5 bg-white rounded shadow-sm">
+            <p class="text-muted italic">No published news items found yet.</p>
+        </div>
+        {% endfor %}
     </div>
 
-    <div class="flavor-item">
-        <img src="https://cdn.pixabay.com/photo/2017/06/16/11/40/ice-cream-2412130_1280.jpg" alt="Strawberry" class="flavor-img">
-        <div class="flavor-info">
-            <h3>Strawberry</h3>
-            <p>Fresh strawberries blended into creamy goodness.</p>
+    <!-- Marketplace Section -->
+    <div class="row mb-5">
+        <div class="col-12 d-flex justify-content-between align-items-end mb-4">
+            <h2 class="fw-bold"><i class="fa-solid fa-cart-shopping text-success me-2"></i>Recent Marketplace</h2>
+            <a href="{% url 'marketplace:member_marketplace_list' %}" class="btn btn-link">Browse Marketplace</a>
         </div>
+        {% for item in recent_marketplace %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}" style="height: 180px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title fw-bold mb-1">{{ item.title }}</h6>
+                    <p class="text-success fw-bold mb-2">₹{{ item.price|default:"N/A" }}</p>
+                    <p class="card-text small text-muted">{{ item.desc|truncatewords:10 }}</p>
+                    <div class="mt-auto pt-3 border-top">
+                        <span class="badge badge-market">{{ item.listing_type|title }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-4 text-muted">No items in marketplace yet.</div>
+        {% endfor %}
     </div>
 
-    <div class="flavor-item">
-        <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/ice-cream-1238248_1280.jpg" alt="Mint" class="flavor-img">
-        <div class="flavor-info">
-            <h3>Mint Chocolate Chip</h3>
-            <p>Refreshing mint with chocolate chunks.</p>
+    <!-- Business Directory Section -->
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-end mb-4">
+            <h2 class="fw-bold"><i class="fa-solid fa-briefcase text-info me-2"></i>Business Directory</h2>
+            <a href="{% url 'business:business_list' %}" class="btn btn-link">Explore Businesses</a>
         </div>
+        {% for item in recent_businesses %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 p-3 text-center border-0 bg-white">
+                <div class="mb-3">
+                    <i class="fa-solid fa-store fa-3x text-info opacity-75"></i>
+                </div>
+                <h6 class="fw-bold mb-1">{{ item.name }}</h6>
+                <p class="small text-muted mb-0">{{ item.category.name|default:"Local Service" }}</p>
+                <p class="small text-muted mt-2"><i class="fa-solid fa-location-dot me-1"></i>{{ item.location }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-4 text-muted">Business directory coming soon.</div>
+        {% endfor %}
     </div>
-</section>
 
-<footer>
-    &copy; 2025 Ice Cream Delight. All rights reserved.
-</footer>
-
-</body>
-</html>
+</div>
+{% endblock %}

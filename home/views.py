@@ -13,17 +13,24 @@ from django.conf import settings
 # NO LOGIN REQUIRED
 # =========================
 # api_view(['GET'])
+from marketplace.models import BnsModel
+from news.models import News
+from business.models import Business
+
 def index(request):
-   return HttpResponseRedirect(settings.FRONTEND_BASE_URL)
-    # return render(request, "html_home/index.html")
-
-
-
-
-
+    """The landing page now shows the dashboard if no separate frontend is configured."""
+    # If the user has a separate frontend (like React), they would use the redirect.
+    # For now, we show the internal home dashboard to make the site functional.
+    return home(request)
 
 def home(request):
-    return render(request, "html_home/home.html")
+    """Fetches the latest community content for the home dashboard."""
+    context = {
+        'recent_news': News.objects.filter(status='published').order_by('-published_at')[:3],
+        'recent_marketplace': BnsModel.objects.filter(status='published').order_by('-published_at')[:4],
+        'recent_businesses': Business.objects.filter(status='published').order_by('-published_at')[:4],
+    }
+    return render(request, "html_home/home.html", context)
 
 
 def aboutus(request):
