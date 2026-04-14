@@ -20,8 +20,11 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 # Minimal Production settings for Render (only active when DEBUG=False)
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    # Use the XL7L domain for CSRF safety
-    CSRF_TRUSTED_ORIGINS = ["https://neighbornet-backend-xl7l.onrender.com"]
+    # Trust BOTH the backend and the frontend for CSRF safety
+    CSRF_TRUSTED_ORIGINS = [
+        "https://neighbornet-backend-xl7l.onrender.com",
+        "https://neighbornet-ez3h.onrender.com"
+    ]
 
 
 
